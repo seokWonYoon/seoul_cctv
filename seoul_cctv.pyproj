@@ -11,6 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>seoul_cctv</Name>
     <RootNamespace>seoul_cctv</RootNamespace>
+    <InterpreterId>CondaEnv|CondaEnv|tensorflow</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,6 +23,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="seoul_cctv.py" />
+    <Compile Include="seoul_crime.py" />
+    <Compile Include="titanic.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="CondaEnv|CondaEnv|tensorflow" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
