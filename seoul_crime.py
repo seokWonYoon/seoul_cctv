@@ -13,7 +13,7 @@ crime_anal_police = pd.read_csv('C:\\Users\\Administrator\\source\\repos\\Seoul_
 
 crime_anal_police.head()
 
-gmaps_key = ".....구글 API 키값 ...."
+gmaps_key = ""
 
 gmaps = googlemaps.Client(key = gmaps_key)
 
@@ -148,12 +148,62 @@ police_norm.head()
 광진구  0.397695  0.529412  0.671570    ...      42.200925  100.000000  83.047619
 """
 # 발생건수를 정규화 시켰다
-
-data_result = pd.read_csv("C:\\Users\\Administrator\\source\\repos\\Seoul_CCTV\\data_result.csv")
-data_result.head()
-
+# 두개의 csv 파일을 합치는 과정
+context = "C:/Users/Administrator/source/repos/Seoul_CCTV/"
+data_result = pd.read_csv(context+"data_result.csv", index_col="구별")
 police_norm['범죄'] = np.sum(police_norm[col], axis = 1)
 police_norm.head()
 
 police_norm['검거'] = np.sum(police_norm[col2], axis = 1)
 police_norm.head()
+police_norm[['인구수','CCTV']] = data_result[['인구수','소계']]
+
+# ****************
+# 데이터 시각화 하기
+# ****************
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import platform
+path = 'C:/Windows/Fonts/malgun.ttf'
+from matplotlib import font_manager, rc
+
+font_name = font_manager.FontProperties(fname=path).get_name()
+rc('font', family = font_name)
+
+sns.pairplot(police_norm, 
+             vars = ['강도','살인','폭력'],
+             kind = 'reg',
+             size = 3)
+
+plt.show()
+
+# 강도와 폭력, 살인과 폭력, 강도와 살인 모두 양의  상관관계가 보입니다.
+police_norm.columns
+sns.pairplot(police_norm, 
+             x_vars = ['인구수','CCTV'],
+             y_vars = ['살인','강도'],
+             kind = 'reg',
+             size = 3)
+
+plt.show()
+# 인구수와 CCTV 갯수, 그리고 살인과 강도에 대한 상관관계 분석
+# 전체적인 상관계수는 CCTV 와 살인의 관계가 낮다
+# 단, CCTV 가 없을 때 살인이 많이 일어나는 구간이 있습니다.
+# 즉 CCTV 개수를 기준으로 좌측면에 살인과 강도의 높은 수를
+# 갖는 데이터가 보인다
+
+sns.pairplot(police_norm, 
+             x_vars = ['인구수','CCTV'],
+             y_vars = ['살인검거율','폭력검거율'],
+             kind = 'reg',
+             size = 3)
+
+plt.show()
+
+# 인구수와 CCTV 와 검거율간의 관계가 음의 관계이거나
+# 별다른 관계가 없는 것으로 파악된다.
+
+
+
+
