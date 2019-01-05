@@ -22,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="iris.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="seoul_cctv.py" />
     <Compile Include="seoul_crime.py" />
     <Compile Include="titanic.py" />
